@@ -115,5 +115,5 @@ resource "null_resource" "ansible" {
 
 
 
-variable "name"{}
+
 
