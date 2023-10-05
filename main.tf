@@ -90,6 +90,13 @@ resource "aws_iam_instance_profile" "instance_profile" {
   role = aws_iam_role.role.name
 }
 
+#### Attaching the policy to the role
+resource "aws_iam_role_policy_attachment" "policy-attach" {
+  role       = aws_iam_role.role.name
+  policy_arn = aws_iam_policy.policy.arn
+}
+
+
 
 #### creating a null resource to run the provisioner block
 resource "null_resource" "ansible" {
