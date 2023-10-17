@@ -133,6 +133,7 @@ resource "aws_instance" "app_instance" {
 resource "aws_security_group" "SG" {
   name        = "${var.component}-${var.env}-sg"
   description = "${var.component}-${var.env}-sg"
+  vpc_id = var.vpc_id
   ingress {
     from_port        = 0
     to_port          = 0
