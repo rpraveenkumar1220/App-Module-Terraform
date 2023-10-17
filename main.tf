@@ -1,3 +1,4 @@
+/*
 #### Creating security groups
 resource "aws_security_group" "SG" {
   name        = "${var.component}-${var.env}-sg"
@@ -116,11 +117,36 @@ resource "null_resource" "ansible" {
     ]
   }
 }
+*/
 
 
+resource "aws_instance" "app_instance" {
+  ami           = data.aws_ami.ami.id
+  instance_type = "t3.micro"
+  vpc_security_group_ids = [ aws_security_group.SG.id]
+  subnet_id = var.subnet_id
+  tags = {
+    Name = "${var.component}-${var.env}"
+  }
+}
 
-
-
-
-
+resource "aws_security_group" "SG" {
+  name        = "${var.component}-${var.env}-sg"
+  description = "${var.component}-${var.env}-sg"
+  ingress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "${var.component}-${var.env}-sg"
+  }
+}
 
