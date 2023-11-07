@@ -35,8 +35,11 @@ resource "aws_launch_template" "lt" {
   }
   image_id      = data.aws_ami.ami.id
   instance_type = var.instance_type
-  monitoring {
-    enabled = true
+  tag_specifications {
+    resource_type = "instance"
+    tags = {
+      Name = "${var.component}-${var.env}"
+    }
   }
   vpc_security_group_ids = [aws_security_group.SG.id]
 
@@ -48,6 +51,17 @@ resource "aws_launch_template" "lt" {
 
 
 ### Creating Auto Scaling Group using the above template  ###
+resource "aws_autoscaling_group" "bar" {
+  desired_capacity   = var.desired_capacity
+  max_size           = var.max_size
+  min_size           = var.min_size
+  vpc_zone_identifier = var.subnets
+
+  launch_template {
+    id      = aws_launch_template.lt.id
+    version = "$Latest"
+  }
+}
 
 
 
