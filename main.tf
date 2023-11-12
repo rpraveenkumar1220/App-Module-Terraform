@@ -82,7 +82,7 @@ resource "aws_lb_target_group" "lbtg" {
   name     = "${var.component}-${var.env}-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = data.aws_ami.ami.id
+  vpc_id   = var.vpc_id
 }
 
 
