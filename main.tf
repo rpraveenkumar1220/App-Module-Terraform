@@ -43,8 +43,8 @@ resource "aws_launch_template" "lt" {
   }
   vpc_security_group_ids = [aws_security_group.SG.id]
 
-  user_data = base64decode(templatefile("${path.module}/userdata.sh", {
-    env = var.env
+  user_data = base64encode(templatefile("${path.module}/userdata.sh", {
+    env       = var.env
     component = var.component
   }))
 }
