@@ -50,12 +50,25 @@ resource "aws_launch_template" "lt" {
 }
 
 
+
+#### Creating DNS records
+resource "aws_route53_record" "dns" {
+  zone_id = "Z0860624TQ63X2IAQS8P"
+  name    = "${var.component}-${var.env}"
+  type    = "CNAME"
+  ttl     = 30
+  records = [var.lb_dns_name]
+}
+
+
+
 ### Creating Auto Scaling Group using the above template  ###
-resource "aws_autoscaling_group" "bar" {
+resource "aws_autoscaling_group" "asg" {
   desired_capacity   = var.desired_capacity
   max_size           = var.max_size
   min_size           = var.min_size
   vpc_zone_identifier = var.subnets
+  target_group_arns = [aws_lb_target_group.lbtg.arn]
 
   launch_template {
     id      = aws_launch_template.lt.id
@@ -64,17 +77,43 @@ resource "aws_autoscaling_group" "bar" {
 }
 
 
-
-
-
-#### Creating DNS records
-resource "aws_route53_record" "dns" {
-  zone_id = "Z0860624TQ63X2IAQS8P"
-  name    = "${var.component}-${var.env}"
-  type    = "A"
-  ttl     = 30
-  records = [aws_instance.instance.private_ip]
+### Creating a Target group for the load balancer  #####
+resource "aws_lb_target_group" "lbtg" {
+  name     = "${var.component}-${var.env}-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = data.aws_ami.ami.id
 }
+
+
+
+resource "aws_lb_listener_rule" "static" {
+  listener_arn = var.listener_arn
+  priority     = var.lb_rule_priority
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lbtg
+  }
+
+  condition {
+    path_pattern {
+      values = ""
+    }
+  }
+
+  condition {
+    host_header {
+
+      values = "${var.component}-${var.env}.devopskumar.site"
+    }
+  }
+}
+
+
+
+
+
 
 
 
