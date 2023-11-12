@@ -1,6 +1,5 @@
 variable "env" {}
 variable "component" {}
-variable "subnet_id" {}
 variable "vpc_id" {}
 variable "lb_dns_name" {}
 variable "subnets" {}
