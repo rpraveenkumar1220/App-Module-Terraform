@@ -87,13 +87,13 @@ resource "aws_lb_target_group" "lbtg" {
 
 
 
-resource "aws_lb_listener_rule" "static" {
+resource "aws_lb_listener_rule" "ls_rule" {
   listener_arn = var.listener_arn
   priority     = var.lb_rule_priority
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.lbtg
+    target_group_arn = aws_lb_target_group.lbtg.arn
   }
 
 
