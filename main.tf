@@ -64,6 +64,7 @@ resource "aws_route53_record" "dns" {
 
 ### Creating Auto Scaling Group using the above template  ###
 resource "aws_autoscaling_group" "asg" {
+  name = "${var.component}-${var.env}-asg"
   desired_capacity   = var.desired_capacity
   max_size           = var.max_size
   min_size           = var.min_size
