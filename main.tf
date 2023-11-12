@@ -96,16 +96,11 @@ resource "aws_lb_listener_rule" "static" {
     target_group_arn = aws_lb_target_group.lbtg
   }
 
-  condition {
-    path_pattern {
-      values = ""
-    }
-  }
 
   condition {
     host_header {
 
-      values = "${var.component}-${var.env}.devopskumar.site"
+      values = ["${var.component}-${var.env}.devopskumar.site"]
     }
   }
 }
