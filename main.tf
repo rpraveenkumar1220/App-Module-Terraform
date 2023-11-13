@@ -1,3 +1,4 @@
+/*
 #### Creating security groups for app components
 resource "aws_security_group" "SG" {
   name        = "${var.component}-${var.env}-sg"
@@ -48,6 +49,7 @@ resource "aws_launch_template" "lt" {
     component = var.component
   }))
 }
+
 
 
 
@@ -105,6 +107,7 @@ resource "aws_lb_listener_rule" "ls_rule" {
     }
   }
 }
+*/
 
 
 
@@ -120,6 +123,38 @@ resource "aws_lb_listener_rule" "ls_rule" {
 
 
 
+
+
+resource "aws_security_group" "SG" {
+  name        = "${var.component}-${var.env}-sg"
+  description = "${var.component}-${var.env}-sg"
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = var.allow_ssh_cidr
+  }
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "${var.component}-${var.env}-sg"
+  }
+}
+
+resource "aws_instance" "Test" {
+  instance_type = "t3.micro"
+  vpc_security_group_ids = aws_security_group.SG.id
+  subnet_id = var.subnet_id
+  tags = {
+    Name = "Test"
+  }
+}
 
 
 
@@ -136,7 +171,8 @@ resource "aws_instance" "instance" {
   }
 }
 
-#### creating a null resource to run the provisioner block
+*/
+/*#### creating a null resource to run the provisioner block
 resource "null_resource" "ansible" {
   depends_on = [aws_instance.instance, aws_route53_record.dns]
   provisioner "remote-exec" {
@@ -153,5 +189,4 @@ resource "null_resource" "ansible" {
       "ansible-pull -i localhost, -U https://github.com/rpraveenkumar1220/Roboshop-Ansible.git  roboshop.yml -e env=${var.env} -e role_name=${var.component}"
     ]
   }
-}
-*/
+}*/
