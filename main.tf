@@ -112,19 +112,6 @@ resource "aws_lb_listener_rule" "ls_rule" {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 resource "aws_security_group" "SG" {
   name        = "${var.component}-${var.env}-sg"
   description = "${var.component}-${var.env}-sg"
