@@ -136,6 +136,7 @@ resource "aws_security_group" "SG" {
 
 resource "aws_instance" "Test" {
   instance_type = "t3.micro"
+  ami = data.aws_ami.ami.id
   vpc_security_group_ids = aws_security_group.SG.id
   subnet_id = var.subnet_id
   tags = {
