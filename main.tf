@@ -128,7 +128,7 @@ resource "aws_security_group" "SG" {
     from_port        = 0
     to_port          = 0
     protocol         = "tcp"
-    cidr_blocks      = sg_subnet_cidr
+    cidr_blocks      = var.sg_subnet_cidr
   }
 
   egress {
