@@ -13,4 +13,4 @@ variable "allow_ssh_cidr" {}
 variable "listener_arn" {}
 variable "lb_rule_priority" {}*/
 variable "subnet_id" {}
-variable "sg_subnet_cidr" {}
+#variable "sg_subnet_cidr" {}
