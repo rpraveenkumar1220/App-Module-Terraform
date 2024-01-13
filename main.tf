@@ -85,6 +85,17 @@ resource "aws_lb_target_group" "lbtg" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
+
+  health_check {
+    enabled = true
+    interval = 5
+    path = "/health"
+    port = var.app_port
+    protocol = "HTTP"
+    timeout = 4
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+  }
 }
 
 
