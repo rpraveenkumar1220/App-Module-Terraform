@@ -1,4 +1,3 @@
-/*
 #### Creating security groups for app components
 resource "aws_security_group" "SG" {
   name        = "${var.component}-${var.env}-sg"
@@ -107,11 +106,10 @@ resource "aws_lb_listener_rule" "ls_rule" {
     }
   }
 }
-*/
 
 
 
-
+/*
 resource "aws_security_group" "SG" {
   name        = "${var.component}-${var.env}-sg"
   description = "${var.component}-${var.env}-sg"
@@ -148,7 +146,6 @@ resource "aws_instance" "Test" {
 
 
 
-/*
 #### Creating EC2 instances with security groups
 resource "aws_instance" "instance" {
   ami           = data.aws_ami.ami.id
@@ -161,8 +158,7 @@ resource "aws_instance" "instance" {
   }
 }
 
-*/
-/*#### creating a null resource to run the provisioner block
+#### creating a null resource to run the provisioner block
 resource "null_resource" "ansible" {
   depends_on = [aws_instance.instance, aws_route53_record.dns]
   provisioner "remote-exec" {
