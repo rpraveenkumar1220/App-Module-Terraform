@@ -82,7 +82,7 @@ resource "aws_autoscaling_group" "asg" {
 ### Creating a Target group for the load balancer  #####
 resource "aws_lb_target_group" "lbtg" {
   name     = "${var.component}-${var.env}-tg"
-  port     = 80
+  port     = var.app_port
   protocol = "HTTP"
   vpc_id   = var.vpc_id
 
