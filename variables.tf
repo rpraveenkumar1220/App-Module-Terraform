@@ -17,5 +17,6 @@ variable "extra_param_access" {}
 variable "tags" {
   default = {}
 }
+variable "allow_prometheus_cidr" {}
 /*variable "subnet_id" {}*/
 
