@@ -14,5 +14,8 @@ variable "listener_arn" {}
 variable "lb_rule_priority" {}
 variable "kms_key_arn" {}
 variable "extra_param_access" {}
+variable "tags" {
+  default = {}
+}
 /*variable "subnet_id" {}*/
 

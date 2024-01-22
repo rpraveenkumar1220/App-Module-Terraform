@@ -37,9 +37,7 @@ resource "aws_launch_template" "lt" {
   instance_type = var.instance_type
   tag_specifications {
     resource_type = "instance"
-    tags = {
-      Name = "${var.component}-${var.env}"
-    }
+    tags          = merge({ Name = "${var.component}-${var.env}", Monitor = "true" }, var.tags)
   }
   vpc_security_group_ids = [aws_security_group.SG.id]
 
